@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 20171103091320) do
 
   create_table "boards", force: :cascade do |t|
+    t.integer "turn"
     t.integer "row_one"
     t.integer "row_two"
     t.integer "row_three"

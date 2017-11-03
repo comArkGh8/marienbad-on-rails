@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# Seed the Board DB with the initial Marienbad Board.
+initial_board = [
+  {:row_one => 1, :row_two => 3,
+    :row_three => 5, :row_four => 7}
+]
+
+Board.create!(initial_board)

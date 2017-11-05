@@ -1,0 +1,20 @@
+
+-# = shows the current board of sticks
+-# puts sticks (check boxes) for each row
+-# from controller index gives the current board
+
+%h1 Current board looks like:
+
+
+%center
+    %form{:method => :post, :action => :update}
+        %br
+        - [:row_one, :row_two, :row_three, :row_four].each do |row|
+            - (1..@board[row]).each do |i|
+                %input{:type=>"checkbox", :name=>"#{i}", :checked=>false}
+            %br
+
+
+-# add link (button) to submit choice
+-#= button_to 'submit choice', edit_board_path, :method => :get 
+-# TODO now need edit method, create method

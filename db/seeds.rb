@@ -8,7 +8,7 @@
 
 # Seed the Board DB with the initial Marienbad Board.
 initial_board = [
-  {:turn => 0, :row_one => 1, :row_two => 3,
+  {:turn => 1, :row_one => 1, :row_two => 3,
     :row_three => 5, :row_four => 7}
 ]
 

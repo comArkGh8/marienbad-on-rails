@@ -7,14 +7,13 @@
 
 
 %center
-    %form{:method => :post, :action => :update}
+    = form_tag board_index_path, method: :get, id: 'stick_boxes' do
         %br
         - [:row_one, :row_two, :row_three, :row_four].each do |row|
+            - @row_num+=1
             - (1..@board[row]).each do |i|
-                %input{:type=>"checkbox", :name=>"#{i}", :checked=>false}
+                =check_box_tag "sticks_chosen[#{i}]", @row_num, false, id: "sticks_chosen_#{row}#{i}"
             %br
+        = submit_tag 'remove chosen sticks', id: 'remove_sticks'
 
-
--# add link (button) to submit choice
--#= button_to 'submit choice', edit_board_path, :method => :get 
--# TODO now need edit method, create method
+-# now add submit action!

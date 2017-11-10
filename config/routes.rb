@@ -3,8 +3,12 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resources :board
-  
+  resources :board do
+    collection do
+      get :instructions
+    end
+  end
+
   # You can have the root of your site routed with "root"
   root 'board#index'
 

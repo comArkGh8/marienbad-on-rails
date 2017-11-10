@@ -1,0 +1,19 @@
+
+-# = shows the current board of sticks
+-# puts sticks (check boxes) for each row
+-# from controller index gives the current board
+
+%h1 Current board looks like:
+
+
+%center
+    = form_tag board_path, method: :get, id: 'stick_boxes' do
+        %br
+        - [:row_one, :row_two, :row_three, :row_four].each do |row|
+            - @row_num+=1
+            - (1..@board[row]).each do |i|
+                =check_box_tag "sticks_chosen[#{i}]", @row_num, false, id: "sticks_chosen_#{row}#{i}"
+            %br
+        = submit_tag 'remove chosen sticks', id: 'remove_sticks'
+
+-# now add submit action!

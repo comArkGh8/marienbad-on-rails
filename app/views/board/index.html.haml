@@ -1,19 +1,18 @@
 
--# = shows the current board of sticks
--# puts sticks (check boxes) for each row
--# from controller index gives the current board
+-# this is the introductory screen with choices:
+-# start new game, instructions
+-# if start new game, show pop-up ? one or two
+-# if want instructions, direct to instruction view
 
-%h1 Current board looks like:
+%h1 Welcome to the Game of Marienbad:
 
 
 %center
-    = form_tag board_index_path, method: :get, id: 'stick_boxes' do
-        %br
-        - [:row_one, :row_two, :row_three, :row_four].each do |row|
-            - @row_num+=1
-            - (1..@board[row]).each do |i|
-                =check_box_tag "sticks_chosen[#{i}]", @row_num, false, id: "sticks_chosen_#{row}#{i}"
-            %br
-        = submit_tag 'remove chosen sticks', id: 'remove_sticks'
+    What would you like to do? 
+%br
+%br
 
--# now add submit action!
+= link_to 'instructions', instructions_board_index_path, id: 'instructions'
+
+%br 
+= link_to 'start new game', board_path(@board, turn: @turn), id: 'start'

@@ -3,16 +3,15 @@
 # and open the template in the editor.
 
 module ChoiceOperations
-  
   # assumes not lost yet (i.e. board is not 1000)
   
-  def best_choice 
+  def self.best_choice(current_board)
     
-    sorted_map=sort_by_increasing_sticks
+    sorted_map=RowOperations.sort_by_increasing_sticks(current_board)
     sorted_array = sorted_map.values
 
 
-    if row_of_sticks.values==[1,3,5,7]
+    if current_board.row_of_sticks.values==[1,3,5,7]
       random_row = rand(4)+1
       total_sticks = 1+2*(random_row -1)
       random_sticks = rand(total_sticks)+1
@@ -21,7 +20,7 @@ module ChoiceOperations
     end
 
     number_of_rows = RowOperations.number_of_non_zero_rows(sorted_array)
-    max_row = get_order_at("row",number_of_rows)
+    max_row = RowOperations.get_order_at(current_board,"row",number_of_rows)
 
     if LosingSituations.stick_array_is_loser?(sorted_array)
       return [max_row,1]
@@ -44,12 +43,12 @@ module ChoiceOperations
         return [one_row, one_sticks-1]
         
       when 2 # do max - min
-        min_sticks = get_order_at("sticks",1)
+        min_sticks = RowOperations.get_order_at(current_board,"sticks",1)
         return [max_row, sorted_map[max_row]-min_sticks]
         
       when 3 # check case by case according to first two in array
         first_two_in_stick_array = sorted_array[0,2]
-        max_sticks = get_order_at("sticks",3)
+        max_sticks = RowOperations.get_order_at(current_board,"sticks",3)
         
         case first_two_in_stick_array
           when [1,1] then return [max_row, max_sticks -1]
@@ -68,9 +67,9 @@ module ChoiceOperations
         
       when 4
         # check for double rows and change to min min k k
-        if has_repeated_row?
+        if RowOperations.has_repeated_row?(current_board)
           # first get other rows
-          other_rows = [1,2,3,4] - two_same
+          other_rows = [1,2,3,4] - current_board.two_same
           # get sorted map, select by other rows
           sorted_others = sorted_map.select{|k,v| other_rows.include? k }
           min_others = sorted_others.values[0]
@@ -82,8 +81,8 @@ module ChoiceOperations
     end
     
     # rest are point cases 
-    min_row = get_order_at("row",1)
-    mid_row = get_order_at("row",2)
+    min_row = RowOperations.get_order_at(current_board,"row",1)
+    mid_row = RowOperations.get_order_at(current_board,"row",2)
     
     case sorted_array
       when [2,4,5] then return [min_row, 1]

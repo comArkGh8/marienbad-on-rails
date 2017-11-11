@@ -13,6 +13,14 @@
 %br
 
 = link_to 'instructions', instructions_board_index_path, id: 'instructions'
+%br
+%br
 
-%br 
-= link_to 'start new game', board_path(@board, turn: @turn), id: 'start'
+
+=form_tag board_index_path, method: :get, id: 'first_player_buttons' do
+    =radio_button_tag(:player1, "computer")
+    =label_tag('computer_first', "computer as first")
+    =radio_button_tag(:player1, "human")
+    =label_tag('human_first', "you as first")
+    %br 
+    =submit_tag 'start one-player game', id: 'start'

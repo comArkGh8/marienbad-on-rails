@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :board do
     collection do
       get :instructions
+      get :human
+      get :computer
     end
   end
 

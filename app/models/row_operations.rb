@@ -13,15 +13,15 @@ module RowOperations
   
   # returns copy of row map in ascending order
   # deletes the zero rows
-  def sort_by_increasing_sticks
-    sorted_map = row_of_sticks.sort_by {|k,v| v}.to_h
+  def self.sort_by_increasing_sticks(a_board)
+    sorted_map = a_board.row_of_sticks.sort_by {|k,v| v}.to_h
     sorted_minus_zeros = sorted_map.select{|k,v| v!=0}
   end
   
   
   # returns (row or sticks) in kth order (from 1-number of non-zero)
-  def get_order_at(row_or_sticks,k)
-    sorted_map=sort_by_increasing_sticks
+  def self.get_order_at(a_board,row_or_sticks,k)
+    sorted_map=sort_by_increasing_sticks(a_board)
     case row_or_sticks
       when "row" then return sorted_map.keys[k-1]
       when "sticks" then return sorted_map.values[k-1]
@@ -31,22 +31,22 @@ module RowOperations
     
   # returns true if there are two repeated rows
   # in addition sets the two rows variable to a pair of rows
-  def has_repeated_row?
+  def self.has_repeated_row?(a_board)
     counts = Hash.new(0)
     # convert hash to array
     # go through each; count occurrence 
-    row_of_sticks.to_a.each{|e|
+    a_board.row_of_sticks.to_a.each{|e|
       counts[e[1]] +=1 unless e[1]==0
     }
-    array_of_pairs=row_of_sticks.select{|k,v| counts[v]>=2}.sort_by {|k,v| v}
+    array_of_pairs=a_board.row_of_sticks.select{|k,v| counts[v]>=2}.sort_by {|k,v| v}
 
     # if array_of_pairs not empty return true
     # if map_of_pairs not empty return true
     if array_of_pairs.empty?
         return false
       else
-        two_same[0] = array_of_pairs[0][0]
-        two_same[1] = array_of_pairs[1][0]
+        a_board.two_same[0] = array_of_pairs[0][0]
+        a_board.two_same[1] = array_of_pairs[1][0]
         return true
       end
     array_of_pairs.empty? ? (return false) : (return true)

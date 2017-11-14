@@ -1,16 +1,21 @@
-
+%center
+%text The computer chooses #{@choice[1]} sticks from row #{@choice[0]}
+%br
 
 %center
-    = form_tag computer_board_index_path, method: :get, id: 'stick_boxes' do
+    %br
+    - [:row_one, :row_two, :row_three, :row_four].each do |row|
+        - @row_num+=1
+        - (1..@board[row]).each do |i|
+            =check_box_tag "sticks_chosen[#{i}]", @row_num, @bool_check[@row_num-1][i-1], id: "stick_field_#{row}#{i}"
         %br
-        - [:row_one, :row_two, :row_three, :row_four].each do |row|
-            - @row_num+=1
-            - (1..@board[row]).each do |i|
-                =check_box_tag "sticks_chosen[#{i}]", @row_num, false, id: "sticks_chosen_#{row}#{i}"
-            %br
 
             
-    %text The computer chooses #{@choice[1]} sticks from row #{@choice[0]}
-    %br
-    %text click to update the board
-    = submit_tag 'remove chosen sticks', id: 'remove_sticks'
+    - if @computer_lose
+        %text Congrats, you won!!!
+        = link_to 'start over', root_path, method: :get, id: 'start over button'
+    - else
+        %text click to update the board
+        = button_to 'continue', board_path(id: @new_id, turn: @next_turn), method: :get, id: 'continue button'
+
+

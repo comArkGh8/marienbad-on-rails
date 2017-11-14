@@ -11,6 +11,11 @@
 
         -# here put notice according to player
         -# or use render
-        %text It is your turn, choose your sticks above
-        %br
-        = submit_tag 'remove chosen sticks', id: 'remove_sticks'
+        
+        - if @human_lose
+            %text Sorry, you lose.
+            = link_to 'start over', root_path, method: :get, id: 'start over button'
+        - else
+            %text It is your turn, choose your sticks above
+            %br
+            = submit_tag 'remove chosen sticks', id: 'remove_sticks'

@@ -1,0 +1,24 @@
+
+Feature: choose sticks by clicking on check boxes
+
+As a marienbad player
+So that I can remove sticks
+I want to remove boxes by checking and submitting
+
+Background: there is a game board in play
+
+    Given the following game boards:
+    |   turn    | row_one   | row_two   | row_three | row_four  |
+    |   1       |   1       |   3       |   5       |   7       |
+    |   1       |   0       |   2       |   4       |   4       | 
+    |   1       |   1       |   1       |   1       |   1       |
+
+Scenario: choose 1 stick from a given non-zero row
+    When I click on a check box in a row
+    And I press "remove chosen sticks"
+    Then the row should have one less stick
+
+Scenario: choose all the sticks from a given non-zero row
+    When I click on all the boxes
+    And I press "remove chosen sticks"
+    Then the row should have zero sticks

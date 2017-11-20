@@ -36,9 +36,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'haml'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'json', '>= 2.0.0'
 
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', group: :doc
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -46,6 +47,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 
 group :test do
@@ -55,7 +57,6 @@ end
 
 group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
 
   gem 'rspec-rails'
   gem 'guard-rspec'

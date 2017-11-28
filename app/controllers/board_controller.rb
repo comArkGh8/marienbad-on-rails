@@ -57,7 +57,6 @@ class BoardController < ApplicationController
     @board_sticks_hash = {1=> @board[:row_one], 2=> @board[:row_two], 
       3=> @board[:row_three], 4 => @board[:row_four]}
     @marienbad_board = Board.initialize(@board_sticks_hash)
-    
     @human_lose = LosingSituations.game_over?(@board_sticks_hash.values)
 
     # this will count the rows in the view
@@ -73,7 +72,7 @@ class BoardController < ApplicationController
     
       # produce updated board:
       # get array of row, sticks
-      @row = params[:sticks_chosen].values.first
+      @row = params[:sticks_chosen].values.first.to_i
       @num_sticks = params[:sticks_chosen].keys.size
 
 

@@ -54,6 +54,7 @@ class BoardController < ApplicationController
     session[:id] = params[:board_id] unless params[:board_id].nil?
     @id=session[:id]
     @board=Board.find(@id)
+    puts @board.id
     @board_sticks_hash = {1=> @board[:row_one], 2=> @board[:row_two], 
       3=> @board[:row_three], 4 => @board[:row_four]}
     @marienbad_board = Board.initialize(@board_sticks_hash)

@@ -22,3 +22,8 @@ Scenario: choose all the sticks from a given non-zero row
     When I check all the boxes in row_two
     And I press "remove chosen sticks"
     Then row 2 should have 0 sticks
+
+Scenario: choose sticks from two different rows
+    When I check 1 stick from row_one
+    And I check 1 stick from row_two
+    Then I should see "try again"

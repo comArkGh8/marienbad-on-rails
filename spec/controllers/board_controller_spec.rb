@@ -44,7 +44,7 @@ describe BoardController do
     it 'should not allow choice of sticks from different rows' do
       get :human, params: {board_id: @board_id, 
         sticks_chosen: {'sticks_chosen_11' => 1, 'sticks_chosen_21' => 2} }
-      expect(response).to redirect_to(human_board_index_url(id: @board_id))
+      expect(response).to redirect_to(human_board_index_url(board_id: @board_id))
     end
     
     

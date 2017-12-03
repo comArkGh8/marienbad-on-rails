@@ -54,7 +54,6 @@ class BoardController < ApplicationController
     session[:id] = params[:board_id] unless params[:board_id].nil?
     @id=session[:id]
     @board=Board.find(@id)
-    puts @board.id
     @board_sticks_hash = {1=> @board[:row_one], 2=> @board[:row_two], 
       3=> @board[:row_three], 4 => @board[:row_four]}
     @marienbad_board = Board.initialize(@board_sticks_hash)
@@ -66,32 +65,36 @@ class BoardController < ApplicationController
     
     # get the sticks which were checked 
     # :sticks_chosen is a params passed
-    # TODO: add safety that only one row can be chosen
     unless params[:sticks_chosen].nil?
-      @sticks_to_remove = params[:sticks_chosen]
-    
-    
-      # produce updated board:
-      # get array of row, sticks
-      @row = params[:sticks_chosen].values.first.to_i
-      @num_sticks = params[:sticks_chosen].keys.size
+      # check if more than one row is chosen
+      if params[:sticks_chosen].values.to_set.size > 1
+        flash[:notice] = "You can't choose sticks from different rows.
+          try again."
+        redirect_to human_board_index_path(board_id: @id)
+      else
+        @sticks_to_remove = params[:sticks_chosen]
+        # get array of row, sticks
+        @row = params[:sticks_chosen].values.first.to_i
+        @num_sticks = params[:sticks_chosen].keys.size
 
 
-      # use change fcn to change the board
-      @new_marienbad_board=Board.change(@marienbad_board,@row,@num_sticks)
+        # use change fcn to change the board
+        @new_marienbad_board=Board.change(@marienbad_board,@row,@num_sticks)
 
-      # add turn, then add to db
-      @next_turn = @board[:turn]+1
-      @new_board = [
-        {:turn => @next_turn, :row_one => @new_marienbad_board.row_of_sticks[1],
-          :row_two => @new_marienbad_board.row_of_sticks[2],
-          :row_three => @new_marienbad_board.row_of_sticks[3],
-          :row_four => @new_marienbad_board.row_of_sticks[4]}
-      ]
+        # add turn, then add to db
+        @next_turn = @board[:turn]+1
+        @new_board = [
+          {:turn => @next_turn, :row_one => @new_marienbad_board.row_of_sticks[1],
+            :row_two => @new_marienbad_board.row_of_sticks[2],
+            :row_three => @new_marienbad_board.row_of_sticks[3],
+            :row_four => @new_marienbad_board.row_of_sticks[4]}
+        ]
 
-      Board.create!(@new_board)
-      new_id=Board.where(turn: @next_turn).first.id
-      redirect_to board_path(id: new_id, turn: @next_turn)
+        Board.create!(@new_board)
+        new_id=Board.where(turn: @next_turn).first.id
+        redirect_to board_path(id: new_id, turn: @next_turn)
+      end
+
     end  
       
   end

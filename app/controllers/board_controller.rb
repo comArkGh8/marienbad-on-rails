@@ -40,6 +40,11 @@ class BoardController < ApplicationController
     
     @whose_turn = @players_turns[@turn%2.to_i]
     
+    # flash current board status if it's human's turn
+    if @whose_turn=='human'
+      flash[:notice] = 'The current board now looks like:'
+    end
+    
     if @whose_turn=='computer'
       redirect_to computer_board_index_path(board_id: id)
     else
@@ -50,7 +55,7 @@ class BoardController < ApplicationController
 
   
   
-  def human
+  def human   
     session[:id] = params[:board_id] unless params[:board_id].nil?
     @id=session[:id]
     @board=Board.find(@id)

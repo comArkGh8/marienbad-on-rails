@@ -1,5 +1,5 @@
 %center
-%text The computer chooses #{@choice[1]} sticks from row #{@choice[0]}
+%subtxt The computer chooses #{@choice[1]} sticks from row #{@choice[0]}
 %br
 
 %center
@@ -15,7 +15,7 @@
         %text Congrats, you won!!!
         = link_to 'start over', root_path, method: :get, id: 'start over button'
     - else
-        %text click to update the board
+        %subtxt click to update the board
         = button_to 'continue', board_path(id: @new_id, turn: @next_turn), method: :get, id: 'continue button'
 
 

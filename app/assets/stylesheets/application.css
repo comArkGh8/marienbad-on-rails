@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+input[type='checkbox'] {
+   width: 30px;
+   height: 30px;
+}
+
+txt {
+    font-size: 150%;
+}
+
+subtxt {
+    font-size: 125%;
+}
+
+#notice {
+  font-size: 125%;
+}

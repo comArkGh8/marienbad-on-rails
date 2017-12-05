@@ -14,9 +14,9 @@
         -# or use render
         
         - if @human_lose
-            %text Sorry, you lose.
+            %txt Sorry, you lose.
             = link_to 'start over', root_path, method: :get, id: 'start over button'
         - else
-            %text It is your turn, choose your sticks above
+            %subtxt It is your turn, choose your sticks above
             %br
             = submit_tag 'remove chosen sticks', id: 'remove_sticks'

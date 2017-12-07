@@ -44,7 +44,9 @@ module LosingSituations
    
     # else divide according to number of non-zero rows
     # next belongs to 3 or four rows
-    return true if (sum_of_sticks == 14) || (sum_of_sticks == 16)
+    return true if ((sum_of_sticks == 14) && 
+        (!(RowOperations.array_has_repeated_row?(stick_array)))) || 
+        (sum_of_sticks == 16)
     
     case RowOperations.number_of_non_zero_rows(stick_array)
         

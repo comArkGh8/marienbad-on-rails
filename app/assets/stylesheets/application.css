@@ -13,6 +13,16 @@
  *= require_tree .
  *= require_self
  */
+
+html, body {
+  margin: 30;
+  padding: 0;
+  background: White;
+  color: DarkSlateGrey;
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: 14pt;
+}
+
 input[type='checkbox'] {
    width: 30px;
    height: 30px;
@@ -28,4 +38,17 @@ subtxt {
 
 #notice {
   font-size: 125%;
+}
+
+form label {
+  line-height: 25px;
+  font-weight: bold;
+}
+
+.link_class{
+    font-size: 150%;
+}
+
+.button_class{
+    font-size: 100%;
 }

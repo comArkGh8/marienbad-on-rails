@@ -9,14 +9,16 @@
                 - index = @row_num**2 - 2*@row_num +1+ i
                 =check_box_tag "sticks_chosen[#{index}]", @row_num, false, id: "sticks_chosen_#{row}#{i}"
             %br
+            %br
 
         -# here put notice according to player
         -# or use render
         
         - if @human_lose
             %txt Sorry, you lose.
-            = link_to 'start over', root_path, method: :get, id: 'start over button'
+            = link_to 'start over', root_path, method: :get, id: 'start over button',
+                class: 'link_class'
         - else
             %subtxt It is your turn, choose your sticks above
             %br
-            = submit_tag 'remove chosen sticks', id: 'remove_sticks'
+            = submit_tag 'remove chosen sticks', id: 'remove_sticks', class: 'button_class'

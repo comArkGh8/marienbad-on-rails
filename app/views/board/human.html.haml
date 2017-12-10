@@ -15,9 +15,14 @@
         -# or use render
         
         - if @human_lose
-            %txt Sorry, you lose.
+            %txt Sorry, you lose. You can
             = link_to 'start over', root_path, method: :get, id: 'start over button',
                 class: 'link_class'
+                
+            %txt Or review the game's 
+            = link_to 'history', history_board_index_path(turn: @current_turn), 
+                method: :get, id: 'history button', class: 'link_class'
+
         - else
             %subtxt It is your turn, choose your sticks above
             %br

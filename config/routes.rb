@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get :instructions
       get :human
       get :computer
+      get :history
     end
   end
 

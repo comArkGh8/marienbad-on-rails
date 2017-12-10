@@ -1,0 +1,27 @@
+
+-# = shows the current board of sticks
+-# puts sticks (check boxes) for each row
+-# from controller index gives the current board
+
+%h1 This game went as follows:
+
+
+%center   
+    %br
+    - (1..@number_of_turns).each do |turn|
+        %txt At turn #{turn}, board looked like:
+        %br
+        - [:row_one, :row_two, :row_three, :row_four].each do |row|
+            - (1..@board_array[turn-1][row]).each do |i|               
+                =check_box_tag "sticks_chosen[#{i}]", @row_num, false, id: "sticks_chosen_#{row}#{i}"
+            %br
+        %br
+        %br
+        %br
+        
+            
+            
+
+
+
+

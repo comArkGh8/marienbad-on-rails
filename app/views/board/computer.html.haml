@@ -13,9 +13,14 @@
 
             
     - if @computer_lose
-        %txt Congrats, you won!!!
+        %txt Congrats, you won!!!  You can now
         = link_to 'start over', root_path, method: :get, id: 'start over button',
             class: 'link_class'
+        
+        %txt Or review the game's 
+        = link_to 'history', history_board_index_path(turn: @current_turn), 
+            method: :get, id: 'history button', class: 'link_class'
+
     - else
         %subtxt click to update the board
         = button_to 'continue', board_path(id: @new_id, turn: @next_turn), 

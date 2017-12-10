@@ -64,6 +64,11 @@ class BoardController < ApplicationController
     @marienbad_board = Board.initialize(@board_sticks_hash)
     @human_lose = LosingSituations.game_over?(@board_sticks_hash.values)
 
+    
+    # add turn, to be used to update game later
+    @current_turn=@board[:turn]
+    @next_turn = @current_turn+1
+        
     # this will count the rows in the view
     @row_num = 0
 
@@ -86,8 +91,6 @@ class BoardController < ApplicationController
         # use change fcn to change the board
         @new_marienbad_board=Board.change(@marienbad_board,@row,@num_sticks)
 
-        # add turn, then add to db
-        @next_turn = @board[:turn]+1
         @new_board = [
           {:turn => @next_turn, :row_one => @new_marienbad_board.row_of_sticks[1],
             :row_two => @new_marienbad_board.row_of_sticks[2],
@@ -135,8 +138,8 @@ class BoardController < ApplicationController
       end
     end
 
-    
-    @next_turn = @board[:turn]+1
+    @current_turn=@board[:turn]
+    @next_turn = @current_turn+1
     @new_marienbad_board=Board.change(@marienbad_board,@choice[0],@choice[1])
 
     @new_board = [
@@ -152,6 +155,36 @@ class BoardController < ApplicationController
     
     #redirect_to board_path(id: new_id, turn: @next_turn)
   end
+  
+  def history
+    @number_of_turns = params[:turn].to_i
+    
+    # create board array (entries corresponding to turn)
+    @board_array=Array.new
+    (1..@number_of_turns).each do |i|
+      @board_array[i-1] = Board.where(turn: i).first
+    end
+    
+    # create array of rows (entries corresponding to turn)
+    @row_one_array=Array.new
+    @row_two_array=Array.new
+    @row_three_array=Array.new
+    @row_four_array=Array.new
+    
+    (1..@number_of_turns).each do |i|
+      @current_board = @board_array[i-1]
+      if @current_board.nil?
+        puts i
+      end
+      @row_one_array[i-1] = @current_board[:row_one]
+      @row_two_array[i-1] = @current_board[:row_two]
+      @row_three_array[i-1] = @current_board[:row_three]
+      @row_four_array[i-1] = @current_board[:row_four]
+    end
+    
+  end
+  
+  
 end
   
 

@@ -1,5 +1,5 @@
 %center
-%text The computer chooses #{@choice[1]} sticks from row #{@choice[0]}
+%subtxt The computer chooses #{@choice[1]} sticks from row #{@choice[0]}
 %br
 
 %center
@@ -9,13 +9,16 @@
         - (1..@board[row]).each do |i|
             =check_box_tag "sticks_chosen[#{i}]", @row_num, @bool_check[@row_num-1][i-1], id: "stick_field_#{row}#{i}"
         %br
+        %br
 
             
     - if @computer_lose
-        %text Congrats, you won!!!
-        = link_to 'start over', root_path, method: :get, id: 'start over button'
+        %txt Congrats, you won!!!
+        = link_to 'start over', root_path, method: :get, id: 'start over button',
+            class: 'link_class'
     - else
-        %text click to update the board
-        = button_to 'continue', board_path(id: @new_id, turn: @next_turn), method: :get, id: 'continue button'
+        %subtxt click to update the board
+        = button_to 'continue', board_path(id: @new_id, turn: @next_turn), 
+            method: :get, id: 'continue button', class: 'button_class'
 
 

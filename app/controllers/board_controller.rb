@@ -3,13 +3,22 @@ class BoardController < ApplicationController
   include BoardHelper
   
   def board_params
-    params.require(:board).permit(:board_id, :sticks_chosen, :turn, :player1)
+    params.require(:board).permit(:user_id, :board_id, :sticks_chosen, :turn, :player1)
   end
   
   # shows current board
   def index
-    Board.where.not(turn: 1).destroy_all
-    @board = Board.where(turn: 1).first
+    # first get assigned user_ids
+    @user_id ||= Board.maximum(:user_id) +1
+    @init_user_board = [
+      {:user_id => @user_id, :turn => 1, :row_one => 1,
+        :row_two => 3,
+        :row_three => 5,
+        :row_four => 7}
+    ]
+    Board.create!(@init_user_board)
+    @board = Board.where(user_id: @user_id).first
+    
     @turn = @board[:turn]
     if params[:player1].nil?
       @player ||= 'computer'
@@ -59,6 +68,7 @@ class BoardController < ApplicationController
     session[:id] = params[:board_id] unless params[:board_id].nil?
     @id=session[:id]
     @board=Board.find(@id)
+    @user_id = @board[:user_id]
     @board_sticks_hash = {1=> @board[:row_one], 2=> @board[:row_two], 
       3=> @board[:row_three], 4 => @board[:row_four]}
     @marienbad_board = Board.initialize(@board_sticks_hash)
@@ -92,14 +102,15 @@ class BoardController < ApplicationController
         @new_marienbad_board=Board.change(@marienbad_board,@row,@num_sticks)
 
         @new_board = [
-          {:turn => @next_turn, :row_one => @new_marienbad_board.row_of_sticks[1],
+          {:user_id => @user_id, :turn => @next_turn,
+            :row_one => @new_marienbad_board.row_of_sticks[1],
             :row_two => @new_marienbad_board.row_of_sticks[2],
             :row_three => @new_marienbad_board.row_of_sticks[3],
             :row_four => @new_marienbad_board.row_of_sticks[4]}
         ]
 
         Board.create!(@new_board)
-        new_id=Board.where(turn: @next_turn).first.id
+        new_id=Board.where(user_id: @user_id, turn: @next_turn).first.id
         redirect_to board_path(id: new_id, turn: @next_turn)
       end
 
@@ -113,6 +124,9 @@ class BoardController < ApplicationController
     session[:id] = params[:board_id] unless params[:board_id].nil?
     id=session[:id]
     @board=Board.find(id)
+    @user_id = @board[:user_id]
+    puts "computer uid:"
+    puts @user_id
     @board_sticks_hash = {1=> @board[:row_one], 2=> @board[:row_two], 
       3=> @board[:row_three], 4 => @board[:row_four]}
     @marienbad_board = Board.initialize(@board_sticks_hash)
@@ -143,14 +157,15 @@ class BoardController < ApplicationController
     @new_marienbad_board=Board.change(@marienbad_board,@choice[0],@choice[1])
 
     @new_board = [
-      {:turn => @next_turn, :row_one => @new_marienbad_board.row_of_sticks[1],
+      {:user_id => @user_id, :turn => @next_turn,
+        :row_one => @new_marienbad_board.row_of_sticks[1],
         :row_two => @new_marienbad_board.row_of_sticks[2],
         :row_three => @new_marienbad_board.row_of_sticks[3],
         :row_four => @new_marienbad_board.row_of_sticks[4]}
     ]
 
     Board.create!(@new_board)
-    @new_id=Board.where(turn: @next_turn).first.id
+    @new_id=Board.where(user_id: @user_id, turn: @next_turn).first.id
       
     
     #redirect_to board_path(id: new_id, turn: @next_turn)
@@ -158,11 +173,13 @@ class BoardController < ApplicationController
   
   def history
     @number_of_turns = params[:turn].to_i
-    
+    @user_id = params[:user_id].to_i
+    puts 'history uid'
+    puts @user_id
     # create board array (entries corresponding to turn)
     @board_array=Array.new
     (1..@number_of_turns).each do |i|
-      @board_array[i-1] = Board.where(turn: i).first
+      @board_array[i-1] = Board.where(user_id: @user_id, turn: i).first
     end
     
     # create array of rows (entries corresponding to turn)

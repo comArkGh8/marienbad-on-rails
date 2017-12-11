@@ -20,7 +20,7 @@
                 class: 'link_class'
                 
             %txt Or review the game's 
-            = link_to 'history', history_board_index_path(turn: @current_turn), 
+            = link_to 'history', history_board_index_path(user_id: @user_id, turn: @current_turn), 
                 method: :get, id: 'history button', class: 'link_class'
 
         - else

@@ -1,7 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+
+Some features to add:
+
+1) add difficulty levels, easy, intermediate, difficult
+
+2) add two player game (at same spot)
+
+3) add two players on separate computers option
+
 
 Things you may want to cover:
 
